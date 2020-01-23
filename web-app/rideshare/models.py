@@ -1,6 +1,7 @@
 import datetime
 from django.db import models
 from django.utils import timezone
+from django.contrib.postgres.fields import ArrayField
 
 class User(models.Model):
     user_name = models.CharField(max_length = 100)
@@ -30,6 +31,4 @@ class Ride(model.Model):
     owner = models.ForeignKey(User)
     sharer = models.ForeignKey(User)
 
-    driver_id = models.uuidField()
-    owner_id = models.uuidField()
-    sharer_id = models.uuidField()
+    passenger_list = ArrayField(models.CharField())
