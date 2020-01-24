@@ -26,10 +26,9 @@ SECRET_KEY = '$t1utyn_&n!+ek25u5sffpq=(i0^!%9j%*lr#!96in!_j3a#rh'
 DEBUG = True
 
 ALLOWED_HOSTS = ['web']
-
-
 # Application definition
-
+LOGIN_REDIRECT_URL = 'rideshare:profile'
+LOGOUT_REDIRECT_URL = 'rideshare:login'
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
