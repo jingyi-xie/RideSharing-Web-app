@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['web']
 # Application definition
 LOGIN_REDIRECT_URL = 'rideshare:profile'
-LOGOUT_REDIRECT_URL = 'rideshare:login'
+LOGOUT_REDIRECT_URL = 'rideshare:loggedout'
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

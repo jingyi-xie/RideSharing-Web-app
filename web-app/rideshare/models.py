@@ -7,11 +7,11 @@ class User(models.Model):
     user_name = models.CharField(max_length = 100)
     user_type = models.CharField(max_length = 100)
     user_special = models.CharField(max_length = 500)
-    user_share = models.BooleanField()
+    user_share = models.BooleanField(default = False)
     
     vehicle_plate = models.CharField(max_length = 100)
     vehicle_type = models.CharField(max_length = 100)
-    vehicle_capacity = models.IntegerField()
+    vehicle_capacity = models.IntegerField(default = 0)
     vehicle_special = models.CharField(max_length = 500)
     
     def  __str__(self):
@@ -22,8 +22,8 @@ class Ride(models.Model):
     dest = models.CharField(max_length = 100)
     arrival = models.DateTimeField()
 
-    num_passenger = models.IntegerField()
-    sharable = models.BooleanField()
+    num_passenger = models.IntegerField(default = 0)
+    sharable = models.BooleanField(default = False)
     user_special = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "user_request")
     vehicle_special = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "vehicle_request")
 
