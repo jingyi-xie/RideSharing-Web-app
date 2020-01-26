@@ -122,3 +122,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'rideshare:profile'
+LOGIN_URL = 'rideshare:login'

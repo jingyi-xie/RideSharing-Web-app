@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import UserSignupForm, UserForm
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 def signup_view(request):
     if request.method == "POST":
         form = UserSignupForm(request.POST)
@@ -13,6 +13,7 @@ def signup_view(request):
         form = UserSignupForm
     return render(request, 'rideshare/signup.html', {'form': form})
 
+@login_required
 def owner_create_view(request):
     form = UserForm()
     if request.method == "POST":

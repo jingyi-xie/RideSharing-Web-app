@@ -12,7 +12,7 @@
 {% block nav-global %}
 {% if user.is_authenticated %}
 <ul id="nav_out">
-Welcome, <strong>{% firstof user.get_short_name user.get_username %}  |</strong>
+Welcome, <strong>{{ user.username }}  |</strong>
 <a href="{% url 'rideshare:logout'  %}">  Logout</a>
 </ul>
 {% else %}
