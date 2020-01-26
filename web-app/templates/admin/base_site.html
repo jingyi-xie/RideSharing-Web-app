@@ -1,23 +1,9 @@
 {% extends "admin/base.html" %}
 
-{% block title %}{{ title }} | {{ site_title|default:_('Rideshare') }}{% endblock %}
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
 
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Rideshare Site') }}</a></h1>
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Rideshare Admin</a></h1>
 {% endblock %}
 
-{% block nav-global %}
-<ul id="nav">
-<li>{% block welcome-msg %}Welcome,<strong>{% firstof user.get_short_name user.get_username %}</strong>{% endblock %}</li>
-<li>{% block nav-logout %}<a href="{% url 'rideshare:logout'  %}">Logout</a>{% endblock %}</li>
-</ul>
-{% endblock %}
-
-{% if messages %}
-{% for message in messages %}
-{{ messages }}
-{% endfor %} 
-{% endif %}
-
-{% block content %}
-{% endblock %}
+{% block nav-global %}{% endblock %}

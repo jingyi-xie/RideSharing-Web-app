@@ -1,12 +1,15 @@
-{% extends 'admin/base_site.html' %}
+{% extends 'rideshare/base.html' %}
 
 {% block title %}Login{% endblock %}
 
 {% block content %}
   <h2>Login</h2>
+  <br>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Login</button>
   </form>
+  <br><hr><br>
+  No Account? <a href="{% url 'rideshare:signup' %}">Sign Up</a>
 {% endblock %}

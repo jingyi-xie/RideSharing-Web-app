@@ -1,0 +1,9 @@
+{% extends 'rideshare/base.html' %}
+
+{% block title %}Log Out{% endblock %}
+
+{% block content %}
+  <h2>Successfully Logged Out!</h2>
+  <br><hr><br>
+  <a href="{% url 'rideshare:login' %}">Log In Again</a>
+{% endblock %}
