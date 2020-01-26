@@ -1,7 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import UserSignupForm, UserForm
+from django.contrib import messages
 
-from .forms import UserForm
-from .models import User
+def signup_view(request):
+    if request.method == "POST":
+        form = UserSignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Successfully Sign Up!')
+            return redirect('rideshare:login')
+    else:
+        form = UserSignupForm
+    return render(request, 'rideshare/signup.html', {'form': form})
 
 def owner_create_view(request):
     form = UserForm()
@@ -9,10 +19,4 @@ def owner_create_view(request):
         form = UserForm(request.POST)
         if form.is_valid():
             User.objects.create(**form.cleaned_data)
-    context = {
-        'form': form
-    }
-    return render(request, "rideshare/profile.html", context)
-
-def loggedout_view(request):
-    return render(request, "rideshare/loggedout.html")
+    return render(request, "rideshare/profile.html", {'form': form})
