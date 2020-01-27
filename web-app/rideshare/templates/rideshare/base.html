@@ -1,6 +1,12 @@
 {% extends "admin/base.html" %}
-
 {% block title %}{{ title }} | {{ site_title|default:_('Rideshare') }}{% endblock %}
+
+<div class="sidenav">
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+</div>
 
 {% block branding %}
 <h1 id="site-name"><a href="{% url 'rideshare:login' %}">{{ site_header|default:_('Ride Share') }}</a></h1>
@@ -23,11 +29,11 @@ Welcome, <strong>{{ user.username }}  |</strong>
 {% endif %}
 {% endblock %}
 
+
 {% if messages %}
 {% for message in messages %}
 {{ messages }}
 {% endfor %}
 {% endif %}
 
-{% block content %}
-{% endblock %}
+{% block content %}{% endblock %}

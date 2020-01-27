@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import UserSignupForm, UserForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .models import User, Ride
 def signup_view(request):
     if request.method == "POST":
         form = UserSignupForm(request.POST)
