@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import ArrayField
 
 class User(models.Model):
     user_name = models.CharField(max_length = 100)
-    user_type = models.CharField(max_length = 100)
+    #user_type = models.CharField(max_length = 100)
     user_special = models.CharField(max_length = 500)
     user_share = models.BooleanField(default = False)
     

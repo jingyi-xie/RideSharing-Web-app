@@ -3,6 +3,8 @@ from .forms import UserSignupForm, UserForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import User, Ride
+from django.views import generic
+
 def signup_view(request):
     if request.method == "POST":
         form = UserSignupForm(request.POST)
