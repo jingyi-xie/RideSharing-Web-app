@@ -24,3 +24,4 @@ def owner_create_view(request):
         if form.is_valid():
             User.objects.create(**form.cleaned_data)
     return render(request, "rideshare/profile.html", {'form': form})
+

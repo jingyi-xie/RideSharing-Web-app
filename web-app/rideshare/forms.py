@@ -11,3 +11,4 @@ class UserSignupForm(UserCreationForm):
 class UserForm(forms.Form):
     user_name = forms.CharField(label = 'User Name')
     user_special = forms.CharField(label = 'Special Request', required = False, widget=forms.Textarea())
+

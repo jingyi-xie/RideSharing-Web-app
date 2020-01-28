@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.contrib import admin
 from . import views
-from rideshare.views import owner_create_view, signup_view
+from rideshare.views import signup_view,  owner_create_view
 
 app_name = 'rideshare'
 urlpatterns = [
