@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from .forms import UserSignupForm, RequestRideForm
+from .forms import UserSignupForm, UserForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import app_user, app_ride
+from .models import User, Ride
 from django.views import generic
 
 def signup_view(request):
@@ -18,9 +18,9 @@ def signup_view(request):
 
 @login_required
 def owner_create_view(request):
-    form = RequestRideForm()
+    form = UserForm()
     if request.method == "POST":
-        form = RequestRideForm(request.POST)
+        form = UserForm(request.POST)
         if form.is_valid():
-            app_user.objects.create(**form.cleaned_data)
+            User.objects.create(**form.cleaned_data)
     return render(request, "rideshare/profile.html", {'form': form})

@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import app_user, app_ride
+from .models import User, Ride
 # Register your models here.
 
-admin.site.register(app_user)
-admin.site.register(app_ride)
+admin.site.register(User)
+admin.site.register(Ride)
