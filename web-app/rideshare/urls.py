@@ -9,5 +9,5 @@ urlpatterns = [
     path('signup/', signup_view, name = 'signup'),
     path('logout/', auth_views.LogoutView.as_view(template_name='rideshare/logout.html'), name = 'logout'),
     path('login/', auth_views.LoginView.as_view(template_name='rideshare/login.html'), name = 'login'),
-    path('riderequest/', ride_request_view, name = 'riderequest'),
+    path('riderequest/', ride_request_view.as_view(), name = 'riderequest'),
 ]

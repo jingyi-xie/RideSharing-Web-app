@@ -16,15 +16,10 @@ def signup_view(request):
         form = UserSignupForm
     return render(request, 'rideshare/signup.html', {'form': form})
 
-@login_required
-def ride_request_view(CreateView):
-    """
-    form = UserForm()
-    if request.method == "POST":
-        form = UserForm(request.POST)
-        if form.is_valid():
-            User.objects.create(**form.cleaned_data)
-    return render(request, "rideshare/profile.html", {'form': form})
-    """
+class ride_request_view(CreateView):
     model = app_ride
-    fields = ['dest']
+    fields = ['dest', 'arrival','sharable', 'v_type', 'user_special', 'driver', 'owner']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
