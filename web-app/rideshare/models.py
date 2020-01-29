@@ -26,9 +26,11 @@ class app_ride(models.Model):
     v_type = models.CharField(max_length = 500, blank = True)
     user_special = models.CharField(max_length = 500, blank = True)
 
-    driver = models.ForeignKey(app_user, null=False, blank=True, on_delete=models.CASCADE, related_name = "driver")
-    owner = models.ForeignKey(app_user, null=False, blank=True, on_delete=models.CASCADE, related_name = "owner")
+    driver = models.ForeignKey(app_user, null = False, blank=True, on_delete = models.CASCADE, related_name = "driver")
+    owner = models.ForeignKey(app_user, null = False, blank=True, on_delete = models.CASCADE, related_name = "owner")
 
     #passenger_list = ArrayField(models.CharField(max_length = 100))
 
-    
+class app_passenger(models.Model):
+    ride_id = models.ForeignKey(app_ride, null = False, blank = True, on_delete = models_CASCADE, related_name = "rideid")
+    passenger = models.ForeignKey(app_user, null = True, blank = True, on_delete = models.SET_NULL, related_name = "passenger")
