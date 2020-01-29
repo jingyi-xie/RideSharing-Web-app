@@ -18,8 +18,7 @@ def signup_view(request):
 
 class ride_request_view(CreateView):
     model = app_ride
-    fields = ['dest', 'arrival','sharable', 'v_type', 'user_special', 'driver', 'owner']
-
+    fields = ['dest', 'arrival','sharable', 'v_type', 'user_special']
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.owner = self.request.user
         return super().form_valid(form)
