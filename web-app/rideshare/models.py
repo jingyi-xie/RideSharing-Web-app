@@ -1,6 +1,7 @@
 import datetime
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
 
@@ -30,6 +31,9 @@ class app_ride(models.Model):
     owner = models.ForeignKey(app_user, null = True, blank=True, on_delete = models.CASCADE, related_name = "owner")
 
     #passenger_list = ArrayField(models.CharField(max_length = 100))
+
+    def get_absolute_url(self):
+        return reverse('rideshare:ridedetail', kwargs={'pk': self.pk})
 
 class app_passenger(models.Model):
     ride_id = models.ForeignKey(app_ride, null = False, blank = True, on_delete = models.CASCADE, related_name = "rideid")

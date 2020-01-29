@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from .forms import UserSignupForm, UserForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import app_user, app_ride
-from django.views.generic import CreateView, ListView, DetailView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView
 
 def signup_view(request):
     if request.method == "POST":
@@ -17,10 +17,26 @@ def signup_view(request):
         form = UserSignupForm
     return render(request, 'rideshare/signup.html', {'form': form})
 
+class ride_detail_view(LoginRequiredMixin, DetailView):
+    model = app_ride
+
 class ride_request_view(LoginRequiredMixin, CreateView):
     model = app_ride
-    success_url = '/riderequest'
+    fields = ['dest', 'arrival','sharable', 'v_type', 'user_special']
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        form.instance.status = 'open'
+        return super().form_valid(form)
+
+class ride_edit_view(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = app_ride
     fields = ['dest', 'arrival','sharable', 'v_type', 'user_special']
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
+
+    def test_func(self):
+        ride = self.get_object()
+        if self.request.user == ride.owner:
+            return True
+        return False

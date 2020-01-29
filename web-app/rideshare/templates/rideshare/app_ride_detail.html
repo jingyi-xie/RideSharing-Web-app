@@ -1,0 +1,12 @@
+{% extends "rideshare/base.html" %}
+{% block content %}
+<h1>Your requested ride to {{ object.dest }}</h1>
+
+<h3>Requested arrival time is {{ object.arrival}}<h3> 
+<h3>Ride owner {{ object.owner }}<h3>
+<h3>Sharable? {{ object.sharable }}<h3>
+<h3>Vehicle type: {{ object.v_type }}<h3>
+<h3>Special request: {{ object.user_special }}<h3>
+
+<a class="btn" href="{% url 'rideshare:rideedit' object.id %}">Edit</a>
+{% endblock content %}
