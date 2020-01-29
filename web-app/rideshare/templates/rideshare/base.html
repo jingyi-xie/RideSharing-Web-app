@@ -1,11 +1,36 @@
 {% extends "admin/base.html" %}
+
+  <style type = "text/css">
+    .sidenav {
+      height: 100%;
+      width: 160px;
+      position:fixed;
+      z-index:1;
+      top:0;
+      left:0;
+      background-color:black;
+    }
+
+    .sidenav a {
+      padding: 5px 10px 5px 15px;
+      color: cornsilk;
+      display:block;
+    }
+
+    .sidenav a:hover {
+      color:burlywood
+    }
+
+    .main {
+      margin-left: 100px;
+    }
+  </style>
 {% block title %}{{ title }} | {{ site_title|default:_('Rideshare') }}{% endblock %}
 
 <div class="sidenav">
-  <a href="#">About</a>
-  <a href="#">Services</a>
-  <a href="#">Clients</a>
-  <a href="#">Contact</a>
+  <a href="/Home">Home</a>
+  <a href="/singup">Signup</a>
+  <a href="/riderequest">Request Ride</a>
 </div>
 
 {% block branding %}
@@ -36,4 +61,7 @@ Welcome, <strong>{{ user.username }}  |</strong>
 {% endfor %}
 {% endif %}
 
-{% block content %}{% endblock %}
+  <div id = "content", name = "content", class = "main">
+    {% block content %}{% endblock %}
+  </div>
+
