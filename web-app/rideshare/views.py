@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import UserSignupForm, UserForm
+from .forms import UserSignupForm, DriverInfoForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -20,34 +20,33 @@ def signup_view(request):
 
 def profile_view(request):
     return render(request, 'rideshare/profile.html')
-"""
+
+@login_required
 def driver_info_view(request):
     if request.method == "POST":
-        form = DriverInfoForm(request.POST)
+        form = DriverInfoForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.instance.will_drive = True
+            form.save()
+            messages.success(request, f'Driver information updated!')
+            return redirect('rideshare:profile')
+
+    else:
+        form = DriverInfoForm(instance=request.user)
+
+    return render(request, 'rideshare/driver_info.html', {'form': form}) 
+
+@login_required
+def profile_update_view(request):
+    if request.method == "POST":
+        form = ProfileUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            messages.success(request, f'Successfully saved driver information')
+            messages.success(request, f'Account profile updated!')
             return redirect('rideshare:profile')
     else:
-        form = DriverInfoForm
-    return render(request, 'rideshare/driver_info.html', {'form': form})
-"""
-"""
-class driver_info_view(LoginRequiredMixin, UpdateView):
-    model = app_user
-    fields = ['vehicle_plate', 'vehicle_type','vehicle_capacity', 'vehicle_special']
-    template_name = 'rideshare/driver_info.html'
-    success_url = '/'
-    def form_valid(self, form):
-        form.instance.will_drive = True
-        return super().form_valid(form)
-
-    def test_func(self):
-        appuser = self.get_object()
-        if self.request.user == appuser:
-            return True
-        return False
-  """      
+        form = ProfileUpdateForm(instance=request.user)
+    return render(request, 'rideshare/driver_info.html', {'form': form}) 
 
 class ride_detail_view(LoginRequiredMixin, DetailView):
     model = app_ride

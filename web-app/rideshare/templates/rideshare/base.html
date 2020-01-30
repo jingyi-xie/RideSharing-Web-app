@@ -39,18 +39,18 @@
 
 {% block breadcrumbs %}
 <div align="left">
+
 <h2>
-<a href="{% url 'rideshare:profile' %}"> | --- Profile --- |</a>
-</h2>
-<h2>
-<a href="#"> | --- Register/Updata driver information --- |</a>
-<a href="#"> --- Confirm a ride --- |</a>
-<a href="#"> --- Complete a ride --- |</a>
-</h2>
-<h2>
-<a href="{% url 'rideshare:riderequest' %}"> | --- Request a new ride --- |</a>
-<a href="#"> --- Join a ride --- |</a>
-<a href="#"> --- Ride history --- |</a>
+<a href="{% url 'rideshare:profile' %}"> | ---- Profile ---- </a>
+
+{% if user.will_drive == True %}
+<a href="#"> | ---- Confirm a ride ---- </a>
+<a href="#">  Complete a ride ---- |</a>
+{% endif %}
+
+<a href="{% url 'rideshare:riderequest' %}">  ---- Request a new ride ---- </a>
+<a href="#">  Join a ride ---- </a>
+<a href="#">  Ride history ---- |</a>
 </h2>
 </div>
 {% endblock %}

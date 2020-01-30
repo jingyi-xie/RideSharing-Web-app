@@ -2,4 +2,23 @@
 {% block content %}
 <h1>Welcome back, {{ user.username }}</h1>
 <hr>
+{% if user.will_drive == True %}
+<h2>You've registered as a driver.<h2>
+<h3>Registered Name: {{ user.user_name }}<h3>
+<h3>Plate Number: {{ user.vehicle_plate }}<h3>
+<h3>Vehicle Type: {{ user.vehicle_type }}<h3>
+<h3>Vehivle Capacity: {{ user.vehicle_capacity }}<h3>
+<h3>Vehivle Special Information: {{ user.vehicle_special }}<h3>
+<br>
+<h3><a href="{% url 'rideshare:profileupdate' %}"> Update account profile</a></h3>
+<h3><a href="{% url 'rideshare:driverinfo' %}"> Update vehicle information</a></h3>
+
+{% else %}
+<h2>Not registered as driver yet.<h2>
+<h3><a href="{% url 'rideshare:profileupdate' %}"> Update account profile</a></h3>
+<h3><a href="{% url 'rideshare:driverinfo' %}"> Register as a driver now</a></h3>
+{% endif %}
+
 {% endblock content %}
+
+
