@@ -1,11 +1,15 @@
 {% extends "rideshare/base.html" %}
 {% block content %}
 <h1>Confirm ride to {{ object.dest }}</h1>
-
+<hr>
 <h3>Requested arrival time is {{ object.arrival}}<h3> 
 <h3>Ride owner {{ object.owner }}<h3>
 <h3>Requested vehicle type: {{ object.v_type }}<h3>
 <h3>Owner's special request: {{ object.user_special }}<h3>
 
-<a class="btn" href="{% url 'rideshare:rideconfirm' object.id %}">Confirm</a>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Confirm</button>
+</form>
 {% endblock content %}

@@ -121,6 +121,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = 'rideshare:riderequest'
+LOGIN_REDIRECT_URL = 'rideshare:profile'
 LOGIN_URL = 'rideshare:login'
 AUTH_USER_MODEL = "rideshare.app_user"

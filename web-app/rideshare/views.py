@@ -17,6 +17,9 @@ def signup_view(request):
         form = UserSignupForm
     return render(request, 'rideshare/signup.html', {'form': form})
 
+def profile_view(request):
+    return render(request, 'rideshare/profile.html')
+
 class ride_detail_view(LoginRequiredMixin, DetailView):
     model = app_ride
 
@@ -44,15 +47,18 @@ class ride_edit_view(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class ride_confirm_view(LoginRequiredMixin, UpdateView):
     model = app_ride
     fields = []
-    #template_name = 'rideshare/ride_confirm.html'
+    template_name = 'rideshare/app_ride_confirm.html'
     def form_valid(self, form):
         form.instance.status = 'confirmed'
         form.instance.driver = self.request.user
         return super().form_valid(form)
+    
     """
+    Don't delete!
+
     def test_func(self):
         ride = self.get_object()
         if self.request.user.will_drive == True:
             return True
         return False
-        """
+    """
