@@ -40,3 +40,19 @@ class ride_edit_view(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if self.request.user == ride.owner:
             return True
         return False
+
+class ride_confirm_view(LoginRequiredMixin, UpdateView):
+    model = app_ride
+    fields = []
+    #template_name = 'rideshare/ride_confirm.html'
+    def form_valid(self, form):
+        form.instance.status = 'confirmed'
+        form.instance.driver = self.request.user
+        return super().form_valid(form)
+    """
+    def test_func(self):
+        ride = self.get_object()
+        if self.request.user.will_drive == True:
+            return True
+        return False
+        """
