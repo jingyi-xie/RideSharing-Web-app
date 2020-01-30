@@ -40,6 +40,7 @@
 {% block breadcrumbs %}
 <div align="left">
 
+{% if user.is_authenticated %}
 <h2>
 <a href="{% url 'rideshare:profile' %}"> | ---- Profile ---- </a>
 
@@ -53,7 +54,9 @@
 <a href="#">  Ride history ---- |</a>
 </h2>
 </div>
+{% endif %}
 {% endblock %}
+
     
 {% block nav-global %}
 {% if user.is_authenticated %}
