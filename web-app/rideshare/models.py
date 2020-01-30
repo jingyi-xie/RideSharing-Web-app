@@ -13,6 +13,7 @@ class app_user(AbstractUser):
     vehicle_type = models.CharField(max_length = 100)
     vehicle_capacity = models.IntegerField(default = 4)
     vehicle_special = models.CharField(max_length = 500)
+
 """
     def  __str__(self):
         return self.user_name
