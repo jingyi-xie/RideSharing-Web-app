@@ -90,3 +90,16 @@ class ride_confirm_view(LoginRequiredMixin, UpdateView):
             return True
         return False
     """
+
+def ride_list_view(request):
+    context = {
+        'rides' : app_ride.objects.all()
+    }
+    return render(request, 'rideshare/app_ride_list.html', context)
+
+"""
+class ride_list_view(ListView):
+    model = app_ride
+    context_object_name = 'rides'
+    template_name = 'rideshare/app_ride_list.html'
+"""

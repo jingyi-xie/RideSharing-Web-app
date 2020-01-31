@@ -1,0 +1,27 @@
+{% extends 'rideshare/base.html' %}
+
+{% block title %}All rides{% endblock %}
+
+{% block content %}
+    <h1>Open Rides</h1>
+    {% for ride in rides %}
+    {% if ride.status == 'open' %}
+        <h3>Destination {{ ride.dest }}</h3>
+        <h3>Requested arrival time is {{ ride.arrival}}<h3>
+        <h3>Ride Owner: {{ ride.owner }}<h3>
+        <a href="{% url 'rideshare:ridedetail' ride.id %}">View Detail</a>
+        <br><hr>
+    {% endif %}
+    {% endfor %}
+        <br> <br>  
+    <h1>Confirmed Rides</h1>
+    {% for ride in rides %}
+    {% if ride.status == 'confirmed' %}
+        <h3>Destination {{ ride.dest }}</h3>
+        <h3>Requested arrival time is {{ ride.arrival}}<h3>
+        <h3>Ride Owner: {{ ride.owner }}<h3>
+        <a href="{% url 'rideshare:ridedetail' ride.id %}">View Detail</a>
+        <br><hr>
+    {% endif %}
+    {% endfor %}
+{% endblock %}
