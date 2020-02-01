@@ -39,3 +39,6 @@ class app_ride(models.Model):
 class app_passenger(models.Model):
     ride_id = models.ForeignKey(app_ride, null = False, blank = True, on_delete = models.CASCADE, related_name = "rideid")
     passenger = models.ForeignKey(app_user, null = True, blank = True, on_delete = models.SET_NULL, related_name = "passenger")
+    party_size = models.IntegerField(default = 0)
+    def get_absolute_url(self):
+        return reverse('rideshare:ridelist')

@@ -3,7 +3,7 @@ from .forms import UserSignupForm, DriverInfoForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import app_user, app_ride
+from .models import app_user, app_ride, app_passenger
 from django.views.generic import CreateView, ListView, DetailView, UpdateView
 
 
@@ -103,3 +103,11 @@ class ride_list_view(ListView):
     context_object_name = 'rides'
     template_name = 'rideshare/app_ride_list.html'
 """
+
+class ride_join_view(LoginRequiredMixin, CreateView):
+    model = app_passenger
+    fields = ['party_size']
+    def form_valid(self, form):
+        form.instance.passenger = self.request.user
+        form.instance.ride_id = app_ride.objects.get(pk=self.kwargs.get('pk'))
+        return super().form_valid(form)
