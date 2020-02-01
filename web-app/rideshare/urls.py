@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.contrib import admin
 from . import views
-from rideshare.views import signup_view, profile_view, ride_request_view, ride_detail_view, ride_edit_view, ride_confirm_view, driver_info_view, profile_update_view, ride_list_view, ride_join_view
+from rideshare.views import signup_view, profile_view, ride_request_view, ride_detail_view, ride_edit_view, ride_confirm_view, driver_info_view, profile_update_view, ride_list_view, ride_join_view, ridesearch_sharer_view
 
 app_name = 'rideshare'
 urlpatterns = [
@@ -17,6 +17,7 @@ urlpatterns = [
     path('ride/<int:pk>/join', ride_join_view.as_view(), name = 'ridejoin'),
     path('ride/request/', ride_request_view.as_view(), name = 'riderequest'),
     path('ride/all', ride_list_view, name = 'ridelist'),
+    path('ride/joinsearch', ridesearch_sharer_view, name = 'ridesearchsharer'),
     path('driver/info/', driver_info_view, name = 'driverinfo'),
 
 ]

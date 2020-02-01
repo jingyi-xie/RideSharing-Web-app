@@ -30,7 +30,7 @@ class app_ride(models.Model):
 
     driver = models.ForeignKey(app_user, null = True, blank=True, on_delete = models.CASCADE, related_name = "driver")
     owner = models.ForeignKey(app_user, null = True, blank=True, on_delete = models.CASCADE, related_name = "owner")
-
+    remaining = models.IntegerField(default = 4)
     #passenger_list = ArrayField(models.CharField(max_length = 100))
 
     def get_absolute_url(self):
