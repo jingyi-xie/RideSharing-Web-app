@@ -8,39 +8,41 @@
 </form> -->
 {% block content %}
 
-<h3>Filter Rides</h3>
+<h1>Filter Rides</h1>
 <form method="GET" action=".">
 
-    <input type="search", name="dest", placeholder="Destination" />
-    <input type="number", name="num_passenger", placeholder="Number of passengers" />
+    <h3>Destination: <input type="search", name="dest"/></h3>
+    <h3>Number of passenger: <input type="number", name="num_passenger" /></h3>
  
     <div>
-        <div>
+        <h3><div>
             <label for="arrival_early">Earliest Arrival</label>
             <input type="date", id="arrival_early", name="early">
-        </div>
-        <div>
+        </div></h3>
+        <h3><div>
             <label for="arrival_late">Latest Arrival</label>
             <input type="date", id="arrival_late", name="late">
-        </div>
+        </div></h3>
     </div>
  
     <button type="submit">Search</button>
+    <br><br>
 </form>
 
-<hr />
+<hr>
 
 <div>
-    <ul>
-        {% for ride in queryset %}
-        {% if ride.status == 'open' %}
-        <h3>Destination {{ ride.dest }}</h3>
-        <h3>Requested arrival time is {{ ride.arrival}}<h3>
-        <h3>Ride Owner: {{ ride.owner }}<h3>
-        <a href="{% url 'rideshare:ridejoin' ride.id %}">Join</a>
-        <br><hr>
-        {% endif %}
-        {% endfor %}
-    </ul>
+    <br><br>
+    <h1>Search Result:</h1>
+    {% for ride in queryset %}
+    {% if ride.status == 'open' %}
+    <h3>Destination {{ ride.dest }}</h3>
+    <h3>Requested arrival time is {{ ride.arrival}}<h3>
+    <h3>Ride Owner: {{ ride.owner }}<h3>
+    <a href="{% url 'rideshare:ridejoin' ride.id %}">Join</a>
+    <br><hr>
+    {% endif %}
+    {% endfor %}
+    
 </div>
 {% endblock %}
