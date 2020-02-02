@@ -13,11 +13,10 @@ class app_user(AbstractUser):
     vehicle_type = models.CharField(max_length = 100)
     vehicle_capacity = models.IntegerField(default = 4)
     vehicle_special = models.CharField(max_length = 500)
-
 """
     def  __str__(self):
         return self.user_name
-   """ 
+"""
 class app_ride(models.Model):
     status = models.CharField(max_length = 100)
     dest = models.CharField(max_length = 100)
@@ -36,6 +35,9 @@ class app_ride(models.Model):
     def get_absolute_url(self):
         return reverse('rideshare:ridedetail', kwargs={'pk': self.pk})
 
+    def  __str__(self):
+        return self.dest
+         
 class app_passenger(models.Model):
     ride_id = models.ForeignKey(app_ride, null = False, blank = True, on_delete = models.CASCADE, related_name = "rideid")
     passenger = models.ForeignKey(app_user, null = True, blank = True, on_delete = models.SET_NULL, related_name = "passenger")

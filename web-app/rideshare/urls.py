@@ -18,6 +18,7 @@ urlpatterns = [
     path('ride/request/', ride_request_view.as_view(), name = 'riderequest'),
     path('ride/all', ride_list_view.as_view(), name = 'ridelist'),
     path('ride/joinsearch', ridesearch_sharer_view, name = 'ridesearchsharer'),
+    path('ride/joinsearch/', ridesearch_sharer_view, name = 'ridesearchsharer'),
     path('driver/info/', driver_info_view, name = 'driverinfo'),
 
 ]
