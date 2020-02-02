@@ -125,7 +125,8 @@ def ridesearch_sharer_view(request):
         qs = qs.filter(Q(dest = dest_query) &
                         Q(arrival__gte = early) &
                         Q(arrival__lt = late) &
-                        Q(remaining__gte = num_passenger)
+                        Q(remaining__gte = party) &
+                        Q(sharable = True)
         )
     context = {
         'queryset' : qs
