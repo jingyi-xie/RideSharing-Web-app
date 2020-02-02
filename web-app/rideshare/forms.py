@@ -16,5 +16,5 @@ class DriverInfoForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = app_user
-        fields = ['user_name', 'email']
+        fields = ['email']
 
