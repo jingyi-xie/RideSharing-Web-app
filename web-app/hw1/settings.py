@@ -25,7 +25,7 @@ SECRET_KEY = '$t1utyn_&n!+ek25u5sffpq=(i0^!%9j%*lr#!96in!_j3a#rh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['web', 'vcm-12350.vm.duke.edu']
+ALLOWED_HOSTS = ['web']
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
