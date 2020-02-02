@@ -37,7 +37,7 @@
         <h3>Destination {{ ride.dest }}</h3>
         <h3>Requested arrival time is {{ ride.arrival}}<h3>
         <h3>Ride Owner: {{ ride.owner }}<h3>
-        <!-- <a href="{% url 'rideshare:ridejoin' object.id %}">Join</a> -->
+        <a href="{% url 'rideshare:ridejoin' ride.id %}">Join</a>
         <br><hr>
         {% endif %}
         {% endfor %}
