@@ -99,12 +99,12 @@ def ride_list_view(request):
     }
     return render(request, 'rideshare/app_ride_list.html', context)
 
-"""
-class ride_list_view(ListView):
+class ride_list_view(LoginRequiredMixin, ListView):
     model = app_ride
     context_object_name = 'rides'
     template_name = 'rideshare/app_ride_list.html'
-"""
+    def get_queryset(self):
+        return app_ride.objects.filter(owner = self.request.user) | app_ride.objects.filter(pk__in=app_passenger.objects.filter(passenger=self.request.user).values_list('ride_id', flat=True)[::1])
 
 class ride_join_view(LoginRequiredMixin, CreateView):
     model = app_passenger
@@ -122,9 +122,9 @@ def ridesearch_sharer_view(request):
     late = request.GET.get('late')
     party = request.GET.get('num_passenger')
     if dest_query != '' and dest_query:
-        qs = qs.filter(Q(dest = dest_query) &
-                        Q(arrival__gte = early) &
-                        Q(arrival__lt = late) &
+        qs = qs.filter(Q(dest = dest_query) |
+                        Q(arrival__gte = early) |
+                        Q(arrival__lt = late) |
                         Q(remaining__gte = num_passenger)
         )
     context = {
