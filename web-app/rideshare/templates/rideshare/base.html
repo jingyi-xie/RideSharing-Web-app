@@ -20,7 +20,7 @@
 
 {% if user.will_drive == True %}
 <a href="#"> | ---- Confirm a Ride ---- </a>
-<a href="#">  Complete a Ride ---- |</a>
+<a href="{% url 'rideshare:drivercomplete' %}">  Complete a Ride ---- |</a>
 {% endif %}
 
 <a href="{% url 'rideshare:riderequest' %}">  ---- Request a new ride ---- </a>

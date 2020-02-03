@@ -105,7 +105,7 @@ class ride_complete_view(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def test_func(self):
         ride = self.get_object()
-        if self.request.user.will_drive == True & ride.driver == self.request.user & ride.status == "confirmed":
+        if self.request.user.will_drive == True & ride.driver == self.request.user & ride.status == 'confirmed':
             return True
         return False
 
@@ -120,6 +120,7 @@ class ride_list_view(LoginRequiredMixin, ListView):
     model = app_ride
     context_object_name = 'rides'
     template_name = 'rideshare/app_ride_list.html'
+    ordering = ['-arrival']
     def get_queryset(self):
         return app_ride.objects.filter(owner = self.request.user) | app_ride.objects.filter(pk__in=app_passenger.objects.filter(passenger=self.request.user).values_list('ride_id', flat=True)[::1])
 
@@ -151,3 +152,18 @@ def ridesearch_sharer_view(request):
         'queryset' : qs
     }
     return render(request, "rideshare/ridesearch_sharer.html", context)
+
+@login_required
+def ride_list_view_driver(request):
+    context = {
+        'rides' : app_ride.objects.all()
+    }
+    return render(request, 'rideshare/app_ride_list_driver.html', context)
+
+class ride_list_view_driver(LoginRequiredMixin, ListView):
+    model = app_ride
+    context_object_name = 'rides'
+    template_name = 'rideshare/app_ride_list_driver.html'
+    ordering = ['-arrival']
+    def get_queryset(self):
+        return app_ride.objects.filter(driver = self.request.user) | app_ride.objects.filter(status = 'confirmed')

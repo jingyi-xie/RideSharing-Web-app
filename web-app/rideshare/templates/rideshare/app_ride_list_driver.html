@@ -1,0 +1,18 @@
+{% extends 'rideshare/base.html' %}
+
+{% block title %}All rides{% endblock %}
+
+{% block content %}
+<h1>Rides to Complete</h1>
+    {% for ride in rides %}
+    <h3>Destination {{ ride.dest }}</h3>
+    <h3>Requested arrival time is {{ ride.arrival}}<h3>
+    <h3>Ride Owner: {{ ride.owner }}<h3>
+    <a href="{% url 'rideshare:ridecomplete' ride.id %}">Complete</a>
+    <br><br>
+    <hr>
+    {% endfor %}
+            <br> <br>
+<br>
+<hr><br>
+{% endblock %}
