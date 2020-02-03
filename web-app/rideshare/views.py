@@ -105,7 +105,7 @@ class ride_complete_view(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def test_func(self):
         ride = self.get_object()
-        if self.request.user.will_drive == True & app_ride.objects.get(pk=self.kwargs.get('pk')) == self.request.user:
+        if self.request.user.will_drive == True & ride.driver == self.request.user & ride.status == "confirmed":
             return True
         return False
 
