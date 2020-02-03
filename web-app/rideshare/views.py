@@ -20,6 +20,7 @@ def signup_view(request):
         form = UserSignupForm
     return render(request, 'rideshare/signup.html', {'form': form})
 
+@login_required
 def profile_view(request):
     return render(request, 'rideshare/profile.html')
 
@@ -97,6 +98,7 @@ class ride_confirm_view(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return False
     """
 
+@login_required
 def ride_list_view(request):
     context = {
         'rides' : app_ride.objects.all()
@@ -120,6 +122,7 @@ class ride_join_view(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         app_ride.objects.get(pk=self.kwargs.get('pk')).remaining -= form.instance.party_size
         return super().form_valid(form)
 
+@login_required
 def ridesearch_sharer_view(request):
     qs = app_ride.objects.all()
     dest_query = request.GET.get('dest')
