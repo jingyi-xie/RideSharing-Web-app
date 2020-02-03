@@ -1,0 +1,49 @@
+{% extends 'rideshare/base.html' %}
+
+{% block title %}Available rides{% endblock %}
+
+{% block content %}
+
+<h1>Filter Rides</h1>
+<form method="GET" action=".">
+
+    <h3>Destination: <input type="search" , name="dest" /></h3>
+    <h3>Number of passenger: <input type="number" , name="num_passenger" /></h3>
+
+    <div>
+        <h3>
+            <div>
+                <label for="arrival_early">Earliest Arrival</label>
+                <input type="date" , id="arrival_early" , name="early">
+            </div>
+        </h3>
+        <h3>
+            <div>
+                <label for="arrival_late">Latest Arrival</label>
+                <input type="date" , id="arrival_late" , name="late">
+            </div>
+        </h3>
+    </div>
+    
+    <button type="submit">Search</button>
+    <br><br>
+</form>
+
+<hr>
+
+<div>
+    <br><br>
+    <h1>Search Result:</h1>
+    {% for ride in queryset %}
+    {% if ride.status == 'open' %}
+    <h3>Destination {{ ride.dest }}</h3>
+    <h3>Requested arrival time is {{ ride.arrival}}</h3>
+            <h3>Ride Owner: {{ ride.owner }}</h3>
+            <a href="{% url 'rideshare:rideconfirm' ride.id %}">Confirm</a>
+            <br>
+            <hr>
+    {% endif %}
+    {% endfor %}
+
+</div>
+{% endblock %}

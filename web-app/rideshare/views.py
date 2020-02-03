@@ -7,6 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import app_user, app_ride, app_passenger
 from django.views.generic import CreateView, ListView, DetailView, UpdateView
 from django.db.models import Q
+from django.conf import settings
+from django.core.mail import send_mail
 
 
 def signup_view(request):
@@ -85,6 +87,7 @@ class ride_confirm_view(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     success_message = "Confirm Success!"
     def form_valid(self, form):
         form.instance.status = 'confirmed'
+        #notify(app_ride.objects.get(pk=self.kwargs.get('pk')))
         form.instance.driver = self.request.user
         return super().form_valid(form)
 
@@ -167,3 +170,33 @@ class ride_list_view_driver(LoginRequiredMixin, ListView):
     ordering = ['-arrival']
     def get_queryset(self):
         return app_ride.objects.filter(driver = self.request.user) | app_ride.objects.filter(status = 'confirmed')
+
+
+def notify(thisride):
+    sub = 'Ride Confirmation'
+    text = 'Your ride to' + str(thisride.dest) + 'is accepted by' + str(thisride.driver)
+    sender = settings.EMAIL_HOST_USER
+    receiver = [thisride.owner.email]
+    passengers_list = app_passenger.objects.filter(ride_id = thisride.pk)
+    for p in passengers_list:
+        receiver.append(p.passenger)
+    send_mail(sub, text, sender, receiver)
+
+
+@login_required
+def ridesearch_driver_view(request):
+    qs = app_ride.objects.all()
+    dest_query = request.GET.get('dest')
+    early = request.GET.get('early')
+    late = request.GET.get('late')
+    party = request.GET.get('num_passenger')
+    if dest_query != '' and dest_query:
+        qs = qs.filter(Q(dest = dest_query) &
+                        Q(arrival__gte = early) &
+                        Q(arrival__lt = late) &
+                        Q(remaining__gte = party)
+        )
+    context = {
+        'queryset' : qs
+    }
+    return render(request, "rideshare/ridesearch_driver.html", context)

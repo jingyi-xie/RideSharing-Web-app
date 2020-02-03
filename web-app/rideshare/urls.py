@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.contrib import admin
 from . import views
-from rideshare.views import signup_view, profile_view, ride_request_view, ride_detail_view, ride_edit_view, ride_confirm_view, driver_info_view, profile_update_view, ride_list_view, ride_join_view, ridesearch_sharer_view, ride_complete_view, ride_list_view_driver
+from rideshare.views import signup_view, profile_view, ride_request_view, ride_detail_view, ride_edit_view, ride_confirm_view, driver_info_view, profile_update_view, ride_list_view, ride_join_view, ridesearch_sharer_view, ride_complete_view, ride_list_view_driver,ridesearch_driver_view
 
 app_name = 'rideshare'
 urlpatterns = [
@@ -20,7 +20,6 @@ urlpatterns = [
     path('ride/all/', ride_list_view.as_view(), name = 'ridelist'),
     path('ride/joinsearch/', ridesearch_sharer_view, name = 'ridesearchsharer'),
     path('driver/info/', driver_info_view, name = 'driverinfo'),
+    path('driver/confirm/', ridesearch_driver_view, name = 'ridesearchdriver'),
     path('driver/complete/', ride_list_view_driver.as_view(), name = 'drivercomplete'),
-
-
 ]

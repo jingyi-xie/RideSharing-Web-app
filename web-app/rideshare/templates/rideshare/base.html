@@ -19,7 +19,7 @@
 <a href="{% url 'rideshare:profile' %}"> | ---- Profile ---- </a>
 
 {% if user.will_drive == True %}
-<a href="#"> | ---- Confirm a Ride ---- </a>
+<a href="{% url 'rideshare:ridesearchdriver' %}"> | ---- Confirm a Ride ---- </a>
 <a href="{% url 'rideshare:drivercomplete' %}">  Complete a Ride ---- |</a>
 {% endif %}
 

@@ -124,3 +124,10 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'rideshare:profile'
 LOGIN_URL = 'rideshare:login'
 AUTH_USER_MODEL = "rideshare.app_user"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.protonmail.net'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 1025
+EMAIL_HOST_USER = 'rideshareece568proj1@protonmail.com'
+EMAIL_HOST_PASSWORD = 'rideshareece568'
