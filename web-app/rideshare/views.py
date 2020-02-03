@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import UserSignupForm, DriverInfoForm, ProfileUpdateForm
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import app_user, app_ride, app_passenger
@@ -19,6 +20,7 @@ def signup_view(request):
         form = UserSignupForm
     return render(request, 'rideshare/signup.html', {'form': form})
 
+@login_required
 def profile_view(request):
     return render(request, 'rideshare/profile.html')
 
@@ -52,18 +54,20 @@ def profile_update_view(request):
 class ride_detail_view(LoginRequiredMixin, DetailView):
     model = app_ride
 
-class ride_request_view(LoginRequiredMixin, CreateView):
+class ride_request_view(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = app_ride
     fields = ['dest', 'arrival','sharable', 'v_type', 'num_passenger', 'user_special']
+    success_message = "Request Success!"
     def form_valid(self, form):
         form.instance.owner = self.request.user
         self.request.remaining = self.request.user.vehicle_capacity - form.instance.num_passenger
         form.instance.status = 'open'
         return super().form_valid(form)
 
-class ride_edit_view(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class ride_edit_view(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = app_ride
     fields = ['dest', 'arrival','sharable', 'v_type', 'user_special']
+    success_message = "Edit Success!"
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
@@ -74,25 +78,38 @@ class ride_edit_view(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             return True
         return False
 
-class ride_confirm_view(LoginRequiredMixin, UpdateView):
+class ride_confirm_view(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = app_ride
     fields = []
     template_name = 'rideshare/app_ride_confirm.html'
+    success_message = "Confirm Success!"
     def form_valid(self, form):
         form.instance.status = 'confirmed'
         form.instance.driver = self.request.user
         return super().form_valid(form)
-    
-    """
-    Don't delete!
 
     def test_func(self):
         ride = self.get_object()
         if self.request.user.will_drive == True:
             return True
         return False
-    """
 
+class ride_complete_view(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = app_ride
+    fields = []
+    template_name = 'rideshare/app_ride_complete.html'
+    success_message = "Complete Success!"
+    def form_valid(self, form):
+        form.instance.status = 'complete'
+        return super().form_valid(form)
+
+    def test_func(self):
+        ride = self.get_object()
+        if self.request.user.will_drive == True & ride.driver == self.request.user & ride.status == "confirmed":
+            return True
+        return False
+
+@login_required
 def ride_list_view(request):
     context = {
         'rides' : app_ride.objects.all()
@@ -106,15 +123,17 @@ class ride_list_view(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return app_ride.objects.filter(owner = self.request.user) | app_ride.objects.filter(pk__in=app_passenger.objects.filter(passenger=self.request.user).values_list('ride_id', flat=True)[::1])
 
-class ride_join_view(LoginRequiredMixin, CreateView):
+class ride_join_view(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = app_passenger
     fields = ['party_size']
+    success_message = "Join Success!"
     def form_valid(self, form):
         form.instance.passenger = self.request.user
         form.instance.ride_id = app_ride.objects.get(pk=self.kwargs.get('pk'))
         app_ride.objects.get(pk=self.kwargs.get('pk')).remaining -= form.instance.party_size
         return super().form_valid(form)
 
+@login_required
 def ridesearch_sharer_view(request):
     qs = app_ride.objects.all()
     dest_query = request.GET.get('dest')
