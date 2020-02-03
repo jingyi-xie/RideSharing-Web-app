@@ -87,16 +87,27 @@ class ride_confirm_view(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         form.instance.status = 'confirmed'
         form.instance.driver = self.request.user
         return super().form_valid(form)
-    
-    """
-    Don't delete!
 
     def test_func(self):
         ride = self.get_object()
         if self.request.user.will_drive == True:
             return True
         return False
-    """
+
+class ride_complete_view(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = app_ride
+    fields = []
+    template_name = 'rideshare/app_ride_complete.html'
+    success_message = "Complete Success!"
+    def form_valid(self, form):
+        form.instance.status = 'complete'
+        return super().form_valid(form)
+
+    def test_func(self):
+        ride = self.get_object()
+        if self.request.user.will_drive == True & app_ride.objects.get(pk=self.kwargs.get('pk')) == self.request.user:
+            return True
+        return False
 
 @login_required
 def ride_list_view(request):
