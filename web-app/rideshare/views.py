@@ -174,7 +174,7 @@ class ride_list_view_driver(LoginRequiredMixin, ListView):
 
 def notify(thisride):
     sub = 'Ride Confirmation'
-    text = 'Your ride to ' + str(thisride.dest) + ' is accepted by' + str(thisride.driver)
+    text = 'Your ride to ' + str(thisride.dest) + ' is accepted.'
     sender = settings.EMAIL_HOST_USER
     receiver = [thisride.owner.email]
     passengers_list = app_passenger.objects.filter(ride_id = thisride.pk)
