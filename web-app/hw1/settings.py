@@ -126,7 +126,7 @@ LOGIN_URL = 'rideshare:login'
 AUTH_USER_MODEL = "rideshare.app_user"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.net'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'rideshareece568proj1@gmail.com'
