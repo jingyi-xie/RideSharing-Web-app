@@ -9,7 +9,8 @@
         <h3>Destination {{ ride.dest }}</h3>
         <h3>Requested arrival time is {{ ride.arrival}}<h3>
         <h3>Ride Owner: {{ ride.owner }}<h3>
-        <a href="{% url 'rideshare:ridedetail' ride.id %}">View Detail</a>
+        <h3><a href="{% url 'rideshare:ridedetail' ride.id %}">View Detail</a></h3>
+        <h3><a href="{% url 'rideshare:rideedit' ride.id %}">Edit Ride</a></h3>
         <br><hr>
     {% endif %}
     {% endfor %}
@@ -20,7 +21,8 @@
         <h3>Destination {{ ride.dest }}</h3>
         <h3>Requested arrival time is {{ ride.arrival}}<h3>
         <h3>Ride Owner: {{ ride.owner }}<h3>
-        <a href="{% url 'rideshare:ridedetail' ride.id %}">View Detail</a>
+        <h3><a href="{% url 'rideshare:ridedetail' ride.id %}">View Detail</a></h3>
+        <h3><a href="{% url 'rideshare:rideedit' ride.id %}">Edit Ride</a></h3>
         <br><hr><br>
     {% endif %}
     {% endfor %}
