@@ -87,8 +87,8 @@ class ride_confirm_view(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     success_message = "Confirm Success!"
     def form_valid(self, form):
         form.instance.status = 'confirmed'
-        #notify(app_ride.objects.get(pk=self.kwargs.get('pk')))
         form.instance.driver = self.request.user
+        notify(app_ride.objects.get(pk=self.kwargs.get('pk')))
         return super().form_valid(form)
 
     def test_func(self):
@@ -174,7 +174,7 @@ class ride_list_view_driver(LoginRequiredMixin, ListView):
 
 def notify(thisride):
     sub = 'Ride Confirmation'
-    text = 'Your ride to' + str(thisride.dest) + 'is accepted by' + str(thisride.driver)
+    text = 'Your ride to ' + str(thisride.dest) + ' is accepted by' + str(thisride.driver)
     sender = settings.EMAIL_HOST_USER
     receiver = [thisride.owner.email]
     passengers_list = app_passenger.objects.filter(ride_id = thisride.pk)
