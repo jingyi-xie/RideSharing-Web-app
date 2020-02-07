@@ -21,7 +21,7 @@ class app_user(AbstractUser):
 class app_ride(models.Model):
     status = models.CharField(max_length = 100)
     dest = models.CharField(max_length = 100, verbose_name = 'Destination')
-    arrival = models.DateTimeField(default = timezone.now, null = False, verbose_name = 'Arrival Time')
+    arrival = models.DateTimeField(default = timezone.now, null = False, verbose_name = 'Arrival Time', validators=[MinValueValidator(timezone.now)])
 
     num_passenger = models.IntegerField(default = 1, verbose_name = 'Number of Passengers', validators=[MinValueValidator(1)])
     sharable = models.BooleanField(default = False, verbose_name = 'Share?')
