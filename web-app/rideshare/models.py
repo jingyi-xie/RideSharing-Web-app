@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
+from django.core.validators import MinValueValidator
 
 class app_user(AbstractUser):
     #user_name = models.OneToOneField(LoginUser, on_delete=models.CASCADE, related_name="user_name")
@@ -22,7 +23,7 @@ class app_ride(models.Model):
     dest = models.CharField(max_length = 100, verbose_name = 'Destination')
     arrival = models.DateTimeField(default = timezone.now, null = False, verbose_name = 'Arrival Time')
 
-    num_passenger = models.IntegerField(default = 0, verbose_name = 'Number of Passengers')
+    num_passenger = models.IntegerField(default = 1, verbose_name = 'Number of Passengers', validators=[MinValueValidator(1)])
     sharable = models.BooleanField(default = False, verbose_name = 'Share?')
     v_type = models.CharField(max_length = 500, blank = True, verbose_name = 'Vehicle Type')
     user_special = models.CharField(max_length = 500, blank = True, verbose_name = 'Special Request')
