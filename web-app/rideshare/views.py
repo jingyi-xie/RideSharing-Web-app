@@ -108,7 +108,7 @@ class ride_complete_view(LoginRequiredMixin, UserPassesTestMixin, SuccessMessage
 
     def test_func(self):
         ride = self.get_object()
-        if self.request.user.will_drive == True & ride.driver == self.request.user & ride.status == 'confirmed':
+        if (self.request.user.will_drive == True) & (ride.driver == self.request.user) & (ride.status == 'confirmed'):
             return True
         return False
 
@@ -149,7 +149,7 @@ def ridesearch_sharer_view(request):
                         Q(arrival__gte = early) &
                         Q(arrival__lt = late) &
                         Q(remaining__gte = party) &
-                        Q(sharable = True)
+                        Q(sharable)
         )
     context = {
         'queryset' : qs
@@ -169,7 +169,7 @@ class ride_list_view_driver(LoginRequiredMixin, ListView):
     template_name = 'rideshare/app_ride_list_driver.html'
     ordering = ['-arrival']
     def get_queryset(self):
-        return app_ride.objects.filter(driver = self.request.user) | app_ride.objects.filter(status = 'confirmed')
+        return app_ride.objects.filter(driver = self.request.user) & app_ride.objects.filter(status = 'confirmed')
 
 
 def notify(thisride):
