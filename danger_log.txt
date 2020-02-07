@@ -1,4 +1,6 @@
 01/27: We find that a user can request a ride with 0 passenger
+01/28: We fixed the previous problem by adding a validator in model
 01/29: We find that a user can request a ride for a time in the past
+02/02: We fixed the previous problem by adding a validator in model
 02/05: We find a driver can mark the other driver's ride complete
 02/06: We fixed the previous problem by adding a test function and userpasstestmixin
