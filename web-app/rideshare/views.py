@@ -56,7 +56,7 @@ def profile_update_view(request):
 class ride_detail_view(LoginRequiredMixin, DetailView):
     model = app_ride
 
-class ride_request_view(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+class ride_request_view(LoginRequiredMixin, SuccessMessageMixin,CreateView):
     model = app_ride
     fields = ['dest', 'arrival','sharable', 'v_type', 'num_passenger', 'user_special']
     success_message = "Request Success!"
@@ -66,7 +66,7 @@ class ride_request_view(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         form.instance.status = 'open'
         return super().form_valid(form)
 
-class ride_edit_view(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class ride_edit_view(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = app_ride
     fields = ['dest', 'arrival','sharable', 'v_type', 'user_special']
     success_message = "Edit Success!"
@@ -80,7 +80,7 @@ class ride_edit_view(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixi
             return True
         return False
 
-class ride_confirm_view(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+class ride_confirm_view(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = app_ride
     fields = []
     template_name = 'rideshare/app_ride_confirm.html'
@@ -97,7 +97,7 @@ class ride_confirm_view(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
             return True
         return False
 
-class ride_complete_view(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+class ride_complete_view(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = app_ride
     fields = []
     template_name = 'rideshare/app_ride_complete.html'
@@ -127,7 +127,7 @@ class ride_list_view(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return app_ride.objects.filter(owner = self.request.user) | app_ride.objects.filter(pk__in=app_passenger.objects.filter(passenger=self.request.user).values_list('ride_id', flat=True)[::1])
 
-class ride_join_view(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+class ride_join_view(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = app_passenger
     fields = ['party_size']
     success_message = "Join Success!"

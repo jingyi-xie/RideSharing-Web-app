@@ -16,7 +16,8 @@
 <p>Vehivle Special Information: {{ user.vehicle_special }}</p>
 <a class="btn btn-outline-primary btn-sm" href="{% url 'rideshare:driverinfo' %}" role="button">Update Vehicle Information</a>
 {% else %}
-<h2>Not registered as driver yet.<h2>
+<br>
+<h5>Not registered as driver yet.<h5>
 <a class="btn btn-outline-primary btn-sm" href="{% url 'rideshare:driverinfo' %}" role="button">Register as a driver now</a>
 {% endif %}
 
