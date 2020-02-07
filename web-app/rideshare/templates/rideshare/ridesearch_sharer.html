@@ -33,7 +33,7 @@
     <h4>Search Result:</h4>
     <hr>
     {% for ride in queryset %}
-    {% if ride.status == 'open' %}
+    {% if ride.status == 'open' and ride.sharable %}
         <div class="card" style="width: 28rem;">
         <div class="card-body">
             <h5 class="card-title">Destination {{ ride.dest }}</h5>

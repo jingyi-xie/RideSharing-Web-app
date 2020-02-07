@@ -149,7 +149,7 @@ def ridesearch_sharer_view(request):
                         Q(arrival__gte = early) &
                         Q(arrival__lt = late) &
                         Q(remaining__gte = party) &
-                        Q(sharable)
+                        Q(sharable = True)
         )
     context = {
         'queryset' : qs
