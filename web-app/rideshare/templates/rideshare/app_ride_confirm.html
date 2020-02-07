@@ -1,12 +1,14 @@
 {% extends "rideshare/base.html" %}
 {% block content %}
-<h1>Confirm ride to {{ object.dest }}</h1>
+<h4>Confirm ride to {{ object.dest }}</h4>
 <hr>
-<h3>Requested arrival time is {{ object.arrival}}<h3> 
-<h3>Ride owner {{ object.owner }}<h3>
-<h3>Requested vehicle type: {{ object.v_type }}<h3>
-<h3>Owner's special request: {{ object.user_special }}<h3>
-
+<ul class="list-group">
+  <li class="list-group-item">Requested arrival time is {{ object.arrival}}</li>
+  <li class="list-group-item">Ride owner {{ object.owner }}</li>
+  <li class="list-group-item">Requested vehicle type: {{ object.v_type }}</li>
+  <li class="list-group-item">Owner's special request: {{ object.user_special }}</li>
+</ul>
+<br>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

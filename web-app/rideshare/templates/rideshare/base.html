@@ -1,59 +1,102 @@
-{% extends "admin/base.html" %}
-{% block title %}{{ title }} | {{ site_title|default:_('Rideshare') }}{% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
 
-<div class="sidenav">
-  <a href="/Home">Home</a>
-  <a href="/singup">Signup</a>
-  <a href="/riderequest">Request Ride</a>
-</div>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% block branding %}
-<h1 id="site-name"><a href="{% url 'rideshare:profile' %}">{{ site_header|default:_('Ride Share') }}</a></h1>
-{% endblock %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-{% block breadcrumbs %}
-<div align="left">
+    <link rel="stylesheet" type="text/css" href="{% static 'rideshare/main.css' %}">
 
-{% if user.is_authenticated %}
-<h2>
-<a href="{% url 'rideshare:profile' %}"> | ---- Profile ---- </a>
-
-{% if user.will_drive == True %}
-<a href="{% url 'rideshare:ridesearchdriver' %}"> | ---- Confirm a Ride ---- </a>
-<a href="{% url 'rideshare:drivercomplete' %}">  Complete a Ride ---- |</a>
-{% endif %}
-
-<a href="{% url 'rideshare:riderequest' %}">  ---- Request a new ride ---- </a>
-<a href="{% url 'rideshare:ridesearchsharer' %}">  Join a ride ---- </a>
-<a href="{% url 'rideshare:ridelist' %}">  My Rides  ---- |</a>
-</h2>
-</div>
-{% endif %}
-{% endblock %}
-
-    
-{% block nav-global %}
-{% if user.is_authenticated %}
-<ul id="nav_out">
-Welcome, <strong>{{ user.username }}  |</strong>
-<a href="{% url 'rideshare:logout'  %}">  Logout</a>
-</ul>
-{% else %}
-<ul id="nav_in">
-<a href="{% url 'rideshare:login'  %}">Login  |</a>
-<a href="{% url 'rideshare:signup'  %}">  Signup</a>
-</ul>
-{% endif %}
-{% endblock %}
-
-
-{% if messages %}
-{% for message in messages %}
-{{ messages }}
-{% endfor %}
-{% endif %}
-
- 
-  {% block content %}{% endblock %}
+    {% if title %}
+        <title>Ride Share - {{ title }}</title>
+    {% else %}
+        <title>Ride Share</title>
+    {% endif %}
+</head>
+<body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="{% url 'rideshare:profile' %}">Ride Share</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              
+            </div>
+            
+            <!-- Navbar Right Side -->
+            {% if user.is_authenticated %}
+            <div class="navbar-nav">
+              <a class="nav-item nav-link" href="{% url 'rideshare:profile' %}">Welcome, {{ user.username }} </a>
+              <a class="nav-item nav-link" href="{% url 'rideshare:logout'  %}">Logout</a>
+            </div>
+            {% else %}
+            <div class="navbar-nav">
+              <a class="nav-item nav-link" href="{% url 'rideshare:login'  %}">Login</a>
+              <a class="nav-item nav-link" href="{% url 'rideshare:signup'  %}">Signup</a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
+    </header>
 
 
+
+    <main role="main" class="container pt-3">
+
+      <div class="row">
+      <div class="col-lg-auto">
+        {% if user.is_authenticated %}
+          <ul class="list-group">
+            <a href="#" class="list-group-item list-group-item-action list-group-item-primary"><strong>Profile</strong></a>
+
+            <a href="{% url 'rideshare:profile' %}" class="list-group-item list-group-item-action">Update Profile</a>
+          </ul>
+          <br>
+
+          {% if user.will_drive == True %}
+          <ul class="list-group">
+            <a href="#" class="list-group-item list-group-item-action list-group-item-primary"><strong>Driver</strong></a>
+            <a href="{% url 'rideshare:ridesearchdriver' %}" class="list-group-item list-group-item-action">Confirm a Ride</a>
+            <a href="{% url 'rideshare:drivercomplete' %}" class="list-group-item list-group-item-action">Complete a Ride</a>
+          </ul>
+          <br>
+          {% endif %}
+
+          <ul class="list-group">
+            <a href="#" class="list-group-item list-group-item-action list-group-item-primary"><strong>Passenger</strong></a>
+            <a href="{% url 'rideshare:riderequest' %}" class="list-group-item list-group-item-action">Request a new ride</a>
+            <a href="{% url 'rideshare:ridesearchsharer' %}" class="list-group-item list-group-item-action">Join a ride</a>
+            <a href="{% url 'rideshare:ridelist' %}" class="list-group-item list-group-item-action">My Rides</a>
+          </ul>
+        {% endif %}
+       </div>
+
+        <div class="col-sm-6 ml-5">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+          {% block content %}{% endblock %}
+        </div>
+        
+      </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,17 +1,19 @@
 {% extends "rideshare/base.html" %}
 {% block content %}
-<h1>Ride to {{ object.dest }}</h1>
+
+
+
+<h4>Ride to {{ object.dest }}</h4>
 <hr>
-<h3>Requested arrival time is {{ object.arrival}}<h3> 
-<h3>Ride Owner: {{ object.owner }}<h3>
-<h3>Ride Status: {{ object.status }}<h3>
-
-{% if object.status == 'confirmed' %}
-<h3>Ride Driver: {{ object.driver }}<h3>
-{% endif %}
-
-<h3>Sharable? {{ object.sharable }}<h3>
-<h3>Vehicle type: {{ object.v_type }}<h3>
-<h3>Special request: {{ object.user_special }}<h3>
-<br><hr><br>
+<ul class="list-group">
+    <li class="list-group-item">Requested arrival time is {{ object.arrival}}</li>
+    <li class="list-group-item">Ride owner: {{ object.owner }}</li>
+    <li class="list-group-item">Ride Status: {{ object.status }}</li>
+    {% if object.status == 'confirmed' %}
+        <li class="list-group-item">Ride Driver: {{ object.driver }}</li>
+    {% endif %}
+    <li class="list-group-item">Sharable? {{ object.sharable }}</li>
+    <li class="list-group-item">Vehicle type: {{ object.v_type }}</li>
+    <li class="list-group-item">Special request: {{ object.user_special }}</li>
+</ul>
 {% endblock content %}

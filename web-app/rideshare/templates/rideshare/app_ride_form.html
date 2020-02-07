@@ -3,8 +3,8 @@
 {% block title %}Ride Request{% endblock %}
 
 {% block content %}
-  <h2>Request a new ride!</h2>
-  <br>
+  <h4>Ride</h4>
+  <hr>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
